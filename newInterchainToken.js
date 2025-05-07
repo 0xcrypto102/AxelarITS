@@ -96,8 +96,8 @@ async function registerAndDeploy() {
 // Estimate gas costs
 async function gasEstimator() {
   const gas = await api.estimateGasFee(
-    EvmChain.BSC_TESTNET,
-    EvmChain.MOONBEAM_TESTNET,
+    EvmChain.BINANCE,
+    EvmChain.MOONBEAM,
     GasToken.ETH,
     700000,
     1.1
@@ -105,11 +105,41 @@ async function gasEstimator() {
   return gas;
 }
 
+// Deploy to remote chain: Avalanche Fuji
+async function deployToRemoteChain() {
+  // Get a signer for authorizing transactions
+  const signer = await getSigner();
+  // Get contract for remote deployment
+  const interchainTokenFactoryContract = await getContractInstance(
+    interchainTokenFactoryContractAddress,
+    interchainTokenFactoryContractABI,
+    signer,
+  );
+
+  // Estimate gas fees
+  const gasAmount = await gasEstimator();
+  console.log(`Estimated Gas Amount: ${gasAmount}`);
+
+  // Salt value from registerAndDeploy(). Replace with your own
+  const salt =
+    "0x076bf543d47a1c734acfc0876fd0e87c7bc75e1b6f2cd00474d767d28ebd8588";
+
+  // Initiate transaction
+  const txn = await interchainTokenFactoryContract[
+    "deployRemoteInterchainToken(bytes32,string,uint256)"
+  ](salt, "Moonbeam", gasAmount, { value: gasAmount });
+
+  console.log(`Transaction Hash: ${txn.hash}`);
+}
+
 async function main() {
     const functionName = process.env.FUNCTION_NAME;
     switch (functionName) {
         case "registerAndDeploy":
             await registerAndDeploy();
+            break;
+        case "deployToRemoteChain":
+            await deployToRemoteChain();
             break;
         default:
             console.error(`Unknown function: ${functionName}`);

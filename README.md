@@ -13,3 +13,20 @@ Transaction Hash: 0x481818691c8cfeb7970ab9be29f661cf8a2436d534cd44acfd24e4ede917
 salt: 0x076bf543d47a1c734acfc0876fd0e87c7bc75e1b6f2cd00474d767d28ebd8588,
 Expected Token Manager Address: 0x41dAFB4C9FDfb8DfE03950713D253d1e8a68A09a,
 ```
+
+[View Transaction on BscScan](https://testnet.bscscan.com/tx/0x481818691c8cfeb7970ab9be29f661cf8a2436d534cd44acfd24e4ede917396b)
+
+## Run the `newInterchainToken`.js script to deploy to Moonbeam
+
+```
+FUNCTION_NAME=deployToRemoteChain npx hardhat run newInterchainToken.js --network bsc
+```
+
+Result
+
+```
+Transaction Hash: 0x47f32ad46f1f319433b035c2adb793652e7165fda69fd0790f06a76a40820a06
+```
+
+[View Transaction on BscScan](https://testnet.bscscan.com/tx/0x47f32ad46f1f319433b035c2adb793652e7165fda69fd0790f06a76a40820a06)
+
