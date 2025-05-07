@@ -132,6 +132,30 @@ async function deployToRemoteChain() {
   console.log(`Transaction Hash: ${txn.hash}`);
 }
 
+async function transferTokens() {
+  // Get a signer for authorizing transactions
+  const signer = await getSigner();
+
+  const interchainToken = await getContractInstance(
+    "0x80288bcC567de55fc13a2dAA2650E8b59eE48904", // Update with new token address
+    interchainTokenContractABI,
+    signer,
+  );
+
+  // Calculate the amount
+  const gasAmount = await gasEstimator();
+
+  // Initiate transfer via token
+  const transfer = await interchainToken.interchainTransfer(
+    "Moonbeam",
+    "0x2f3f295370de918Dab1B17E46d572443A0310e81", // Update with your own wallet address
+    ethers.utils.parseEther("25"), // Transfer 25 tokens
+    "0x", // Update with your own payload
+    { value: gasAmount }, // Transaction options
+  );
+  console.log("Trnsaction Hash: ", transfer.hash);
+}
+
 async function main() {
     const functionName = process.env.FUNCTION_NAME;
     switch (functionName) {
@@ -140,6 +164,9 @@ async function main() {
             break;
         case "deployToRemoteChain":
             await deployToRemoteChain();
+            break;
+        case "transferTokens":
+            await transferTokens();
             break;
         default:
             console.error(`Unknown function: ${functionName}`);
