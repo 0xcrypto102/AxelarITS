@@ -88,4 +88,22 @@ async function registerAndDeploy() {
             Expected Token Manager Address: ${expectedTokenManagerAddress},
         `,
     );
-  }
+}
+
+async function main() {
+    const functionName = process.env.FUNCTION_NAME;
+    switch (functionName) {
+        case "registerAndDeploy":
+            await registerAndDeploy();
+            break;
+        default:
+            console.error(`Unknown function: ${functionName}`);
+            process.exitCode = 1;
+            return;
+    }
+}
+
+main().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+});
