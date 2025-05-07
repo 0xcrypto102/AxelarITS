@@ -24,4 +24,68 @@ async function getSigner() {
 
 async function getContractInstance(contractAddress, contractABI, signer) {
     return new ethers.Contract(contractAddress, contractABI, signer);
+}
+
+// Register and deploy a new interchain token to the BSC testnet
+async function registerAndDeploy() {
+    // Generate random salt
+    const salt = "0x" + crypto.randomBytes(32).toString("hex");
+  
+    // Create a new token
+    const name = "New Interchain Token";
+    const symbol = "NIT";
+    const decimals = 18;
+  
+    // Initial token supply
+    const initialSupply = ethers.utils.parseEther("1000");
+  
+    // Get a signer to sign the transaction
+    const signer = await getSigner();
+  
+    // Create contract instances
+    const interchainTokenFactoryContract = await getContractInstance(
+      interchainTokenFactoryContractAddress,
+      interchainTokenFactoryContractABI,
+      signer,
+    );
+    const interchainTokenServiceContract = await getContractInstance(
+      interchainTokenServiceContractAddress,
+      interchainTokenServiceContractABI,
+      signer,
+    );
+  
+    // Generate a unique token ID using the signer's address and salt
+    const tokenId = await interchainTokenFactoryContract.interchainTokenId(
+      signer.address,
+      salt,
+    );
+  
+    // Retrieve new token address
+    const tokenAddress =
+      await interchainTokenServiceContract.interchainTokenAddress(tokenId);
+  
+    // Retrieve token manager address
+    const expectedTokenManagerAddress =
+      await interchainTokenServiceContract.tokenManagerAddress(tokenId);
+  
+    // Deploy new Interchain Token
+    const deployTxData =
+      await interchainTokenFactoryContract.deployInterchainToken(
+        salt,
+        name,
+        symbol,
+        decimals,
+        initialSupply,
+        signer.address,
+      );
+  
+    console.log(
+        `
+            Deployed Token ID: ${tokenId},
+            Token Address: ${tokenAddress},
+            Transaction Hash: ${deployTxData.hash},
+            salt: ${salt},
+            Expected Token Manager Address: ${expectedTokenManagerAddress},
+        `,
+    );
   }
