@@ -8,9 +8,9 @@ module.exports = {
   solidity: "0.8.18",
   networks: {
     bsc: {
-      url: "https://bsc-testnet.drpc.org",
-      chainId: 97,
+      url: "https://data-seed-prebsc-1-s1.binance.org:8545/",
       accounts: [PRIVATE_KEY],
+      chainId: 97,
     },
   },
 };
