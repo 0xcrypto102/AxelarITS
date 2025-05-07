@@ -99,7 +99,7 @@ async function gasEstimator() {
     EvmChain.BINANCE,
     EvmChain.MOONBEAM,
     GasToken.ETH,
-    700000,
+    10000000,
     1.1
   );
   return gas;

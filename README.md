@@ -25,8 +25,33 @@ FUNCTION_NAME=deployToRemoteChain npx hardhat run newInterchainToken.js --networ
 Result
 
 ```
-Transaction Hash: 0x47f32ad46f1f319433b035c2adb793652e7165fda69fd0790f06a76a40820a06
+Transaction Hash: 0x0bf4e565c82d58a16390c7099ca55720255b4f70d70d4eae68a84184dd7a5ec4
 ```
 
-[View Transaction on BscScan](https://testnet.bscscan.com/tx/0x47f32ad46f1f319433b035c2adb793652e7165fda69fd0790f06a76a40820a06)
+[Axelarscan testnet scanner](https://testnet.axelarscan.io/gmp/0x0bf4e565c82d58a16390c7099ca55720255b4f70d70d4eae68a84184dd7a5ec4)
+
+
+## Run the `newInterchainToken.js` script to transfer tokens
+
+```
+FUNCTION_NAME=transferTokens npx hardhat run newInterchainToken.js --network bsc
+```
+
+Result
+
+```
+Transfer Transaction Hash: 0x03caad7443302dd190e70195211a9a42896b8ddfc88656232b93f8061f806a05
+```
+
+[Axelarscan testnet scanner](https://testnet.axelarscan.io/gmp/0x03caad7443302dd190e70195211a9a42896b8ddfc88656232b93f8061f806a05)
+
+
+## NIT(Test Token) Token Amount in wallet
+
+```
+https://moonbase.moonscan.io/token/0x80288bcc567de55fc13a2daa2650e8b59ee48904?a=0x2f3f295370de918Dab1B17E46d572443A0310e81
+
+
+https://testnet.bscscan.com/token/0x80288bcc567de55fc13a2daa2650e8b59ee48904
+```
 
