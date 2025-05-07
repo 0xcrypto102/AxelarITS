@@ -21,3 +21,7 @@ async function getSigner() {
   const [signer] = await ethers.getSigners();
   return signer;
 }   
+
+async function getContractInstance(contractAddress, contractABI, signer) {
+    return new ethers.Contract(contractAddress, contractABI, signer);
+  }
