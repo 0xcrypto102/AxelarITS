@@ -16,6 +16,9 @@ const interchainTokenServiceContractAddress =
   "0xB5FB4BE02232B1bBA4dC8f81dc24C26980dE9e3C";
 const interchainTokenFactoryContractAddress =
   "0x83a93500d23Fbc3e82B410aD07A6a9F7A0670D66";
+const api = new AxelarQueryAPI({
+  environment: Environment.TESTNET,
+});
 
 async function getSigner() {
   const [signer] = await ethers.getSigners();
@@ -88,6 +91,18 @@ async function registerAndDeploy() {
             Expected Token Manager Address: ${expectedTokenManagerAddress},
         `,
     );
+}
+
+// Estimate gas costs
+async function gasEstimator() {
+  const gas = await api.estimateGasFee(
+    EvmChain.BSC_TESTNET,
+    EvmChain.MOONBEAM_TESTNET,
+    GasToken.ETH,
+    700000,
+    1.1
+  );
+  return gas;
 }
 
 async function main() {
